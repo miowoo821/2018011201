@@ -10,6 +10,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.gson.Gson;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -33,7 +34,6 @@ public class MainActivity extends AppCompatActivity {
             public void onResponse(String response) {
                 Log.d("NET", response);
                 try {
-
                     JSONArray array = new JSONArray(response);
                     for(int i=0;i<array.length();i++){
                         JSONObject obj = array.getJSONObject(i);
@@ -44,6 +44,11 @@ public class MainActivity extends AppCompatActivity {
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
+                }
+                Gson gson=new Gson();//新增一個GSON物件
+                animal [] animalshouse=gson.fromJson(response,animal[].class);//把JSON倒進GSON
+                for(animal a:animalshouse){
+                    Log.d("TEST","行政區："+a.district+"，地址："+a.address);
                 }
 
             }
